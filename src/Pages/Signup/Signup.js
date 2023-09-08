@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
 import loginImg from '../../assets/login.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
 import { addUserToDb } from '../../utilities/fakedb';
 
 const Signup = () => {
     const { createUser } = useContext(AuthContext)
+    const navigate = useNavigate();
 
 
     const hangleSignup = event => {
@@ -24,6 +25,7 @@ const Signup = () => {
             .then(result => {
                 const user = result.user;
                 console.log(user);
+                navigate('/login')
             })
             .catch(err => console.error(err));
     }

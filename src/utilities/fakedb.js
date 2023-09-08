@@ -1,4 +1,4 @@
-
+// manage user
 const addUserToDb = (name, email, bio, image) =>{
     const data = {
         name: name,
@@ -32,6 +32,41 @@ const getUserFromDb = () =>{
     return totalUser;
 }
 
+
+// task manage
+const addTaskToDb = (title, description, priority, date) =>{
+    const data = {
+        title: title,
+        description: description,
+        priority: priority,
+        date: date
+    };
+
+    let prevTask = {};
+    let newTask = [];
+    const storedTask = localStorage.getItem('task');
+    if (storedTask) {
+        prevTask = JSON.parse(storedTask);
+        newTask = [...prevTask, data];
+    }
+    else {
+        newTask = [data];
+    }
+
+    localStorage.setItem('task', JSON.stringify(newTask));
+}
+
+const getTaskFromDb = () =>{
+    let totalTask = {};
+
+    const storedTask = localStorage.getItem('task');
+    if(storedTask){
+        totalTask = JSON.parse(storedTask);
+    }
+    return totalTask;
+}
+
+// other section
 const removeFromDb = id =>{
     const storedCart = localStorage.getItem('userData');
     if(storedCart){
@@ -51,5 +86,7 @@ export {
     addUserToDb, 
     getUserFromDb,
     removeFromDb,
+    addTaskToDb,
+    getTaskFromDb,
     deleteShoppingCart
 }

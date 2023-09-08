@@ -1,9 +1,10 @@
 import React from 'react';
+import Task from '../../Task/Task';
 
 const Dashboard = () => {
     return (
         <div>
-            <h2>this is dashboard</h2>
+            <Task></Task>
         </div>
     );
 };
