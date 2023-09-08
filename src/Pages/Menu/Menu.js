@@ -1,7 +1,24 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
+import { getUserFromDb } from '../../utilities/fakedb';
 
 const Menu = () => {
+    const {user} = useContext(AuthContext)
+    let name = null;
+
+    if(user){
+        console.log(user,10)
+        const totalUser = getUserFromDb();
+        console.log(totalUser);
+        totalUser.map(singleUser =>{
+            console.log(singleUser);
+            if(singleUser.email == user.email){
+                name = singleUser.name;
+            }
+        })
+    }
+    
     return (
         <div className="navbar bg-cyan-800 px-9">
             <div className="navbar-start">
@@ -39,6 +56,10 @@ const Menu = () => {
                 </ul>
             </div>
             <div className="navbar-end">
+                <div>
+                    <h2 className='text-white text-xl font-bold mr-5'>{name}</h2>
+                </div>
+
                 <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                     <div className="w-10 rounded-full">
                         <img src="https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-PNG-Picture.png" alt='user' />

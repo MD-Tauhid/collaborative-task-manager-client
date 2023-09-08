@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import loginImg from '../../assets/login.png';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
+import { addUserToDb } from '../../utilities/fakedb';
 
 const Signup = () => {
     const { createUser } = useContext(AuthContext)
@@ -10,15 +11,21 @@ const Signup = () => {
     const hangleSignup = event => {
         event.preventDefault();
         const form = event.target;
+
         const name = form.name.value;
+        const bio = form.bio.value;
+        const image = form.image.value;
         const email = form.email.value;
         const password = form.password.value;
+
+        addUserToDb(name, email, bio, image);
+
         createUser(email, password)
-        .then(result =>{
-            const user = result.user;
-            console.log(result);
-        })
-        .catch(err => console.error(err));
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+            })
+            .catch(err => console.error(err));
     }
 
     return (
@@ -27,7 +34,7 @@ const Signup = () => {
                 <div className="hidden lg:block w-1/2">
                     <img className='mx-auto w-3/4' src={loginImg} alt="" />
                 </div>
-                <div className="card flex-shrink w-full max-w-sm shadow-2xl bg-base-100">
+                <div className="card flex-shrink w-full max-w-md shadow-2xl bg-base-100">
                     <form onSubmit={hangleSignup} className="card-body">
                         <h1 className="text-5xl font-bold pt-1 text-center">Sign Up</h1>
                         <div className="form-control">
@@ -35,6 +42,18 @@ const Signup = () => {
                                 <span className="label-text">Name</span>
                             </label>
                             <input type="text" name='name' placeholder="Name" className="input input-bordered" />
+                        </div>
+                        <div className="form-control">
+                            <label className="label">
+                                <span className="label-text">Bio</span>
+                            </label>
+                            <textarea name='bio' placeholder="Biography" className="input input-bordered max-h-20" />
+                        </div>
+                        <div className="form-control">
+                            <label className="label">
+                                <span className="label-text">Prfile Photo</span>
+                            </label>
+                            <input type="file" name='image' placeholder="Image" className="input" />
                         </div>
                         <div className="form-control">
                             <label className="label">

@@ -1,15 +1,30 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import loginImg from '../../assets/login.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
 
 const Login = () => {
+    const { loginUser } = useContext(AuthContext);
+    const navigate = useNavigate();
 
     // login in handler
-    const hangleLogin = event =>{
+    const hangleLogin = event => {
         event.preventDefault();
         const form = event.target;
         const email = form.email.value;
         const password = form.password.value;
+
+        loginUser(email, password)
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+                navigate('/');
+
+                if (user?.uid) {
+                    form.reset();
+                }
+            })
+            .catch(err => console.error(err));
     }
 
     return (
