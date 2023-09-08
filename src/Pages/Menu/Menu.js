@@ -35,7 +35,7 @@ const Menu = () => {
                             </ul>
                         </details>
                     </li>
-                    <li><Link>Item 3</Link></li>
+                    <li><Link>Task</Link></li>
                 </ul>
             </div>
             <div className="navbar-end">

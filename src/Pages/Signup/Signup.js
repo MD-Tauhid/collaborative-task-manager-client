@@ -1,8 +1,26 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import loginImg from '../../assets/login.png';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
 
 const Signup = () => {
+    const { createUser } = useContext(AuthContext)
+
+
+    const hangleSignup = event => {
+        event.preventDefault();
+        const form = event.target;
+        const name = form.name.value;
+        const email = form.email.value;
+        const password = form.password.value;
+        createUser(email, password)
+        .then(result =>{
+            const user = result.user;
+            console.log(result);
+        })
+        .catch(err => console.error(err));
+    }
+
     return (
         <div className="hero min-h-screen bg-base-200">
             <div className="hero-content flex-col lg:flex-row">
@@ -10,7 +28,7 @@ const Signup = () => {
                     <img className='mx-auto w-3/4' src={loginImg} alt="" />
                 </div>
                 <div className="card flex-shrink w-full max-w-sm shadow-2xl bg-base-100">
-                    <form className="card-body">
+                    <form onSubmit={hangleSignup} className="card-body">
                         <h1 className="text-5xl font-bold pt-1 text-center">Sign Up</h1>
                         <div className="form-control">
                             <label className="label">
